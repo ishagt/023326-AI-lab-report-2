@@ -1,7 +1,7 @@
 # Q2. Implement the Vacuum Cleaning agents efficiency by implementing a model-based agent. Provide your arguements
 import random
 class RoomCleanerAgent:
-    def __init__(self, room_size=(10,10)):
+    def __init__(self, room_size=(4,4)):
         self.room_size = room_size;
         self.grid = [[random.choice([0,1]) for _ in range(room_size[1])]
              for _ in range(room_size[0])]
