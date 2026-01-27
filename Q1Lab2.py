@@ -4,7 +4,9 @@ from typing import Self
 class VacuumCleanerAgent:
     def __init__(self, room_size=2): #constructor
         self.room_size=room_size
-        self.room=[(random.choice([0,1])) for _ in range(room_size) for _ in range(room_size)]
+        self.room = [[random.choice([0,1]) for _ in range(room_size)]
+             for _ in range(room_size)]
+
 #created room with random dirt (1=dirty, 0=clean)
 # Random starting position
         self.position=(random.randint(0,room_size-1),random.randint(0,room_size-1))
@@ -20,13 +22,13 @@ class VacuumCleanerAgent:
         # perceive current state
     def perceive(self):
         x,y=self.position
-        return self.room[x*self.room_size + y]
+        return self.room[x][y]
 #simple reflex agent action
     def act(self):
         x,y=self.position
         if self.perceive()==1: #if dirty
             print(f"cell ({x},{y}) is dirty. Cleaning...")
-            self.room[x*self.room_size + y]=0 #clean the cell
+            self.room[x][y]=0 #clean the cell
         else:
             print(f"cell ({x},{y}) is clean. Moving...")
             self.move()
@@ -45,12 +47,14 @@ class VacuumCleanerAgent:
         self.position=random.choice(possible_moves)
         # Run the agent for a number of steps
     def run(self,steps=10):
+        print("Initial room state:")
         for step in range(steps):
             print(f"\nStep {step+1}:")
             self.display_room()
             self.act()
         print("\nFinal room state:")
         self.display_room()
-        # Run the vacuum cleaner agent
-        agent=VacuumCleanerAgent(room_size=2)
-        agent.run(steps=10)
+
+ # Run the vacuum cleaner agent 
+agent=VacuumCleanerAgent(room_size=2)
+agent.run(steps=10)
