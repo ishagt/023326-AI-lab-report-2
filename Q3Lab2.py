@@ -79,4 +79,5 @@ water_jug = WaterJug((4, 0), (2, None))
 solution_path = water_jug.bfs()
 print(water_jug.generate_path(solution_path))
 
-
+#output:
+# (4, 0) -> (1, 3) -> (1, 0) -> (0, 1) -> (4, 1) -> (2, 3) -> (2, 0)
