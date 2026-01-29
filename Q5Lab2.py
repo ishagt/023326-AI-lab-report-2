@@ -1,6 +1,3 @@
-#6.	WAP in Python to calculate the heuristic value of the states for Tic-Tac-Toe as follows
-#Heuristic function:
-#e(p)= No. of complete rows, columns or diagonals are still open for player p – (No. of complete rows, columns or diagonals are still open for opponent)
 def heuristic(board, player):
     opponent = 'O' if player == 'X' else 'X'
     
@@ -38,5 +35,4 @@ board = [
 player = 'X'
 h_value = heuristic(board, player)
 print(f"Heuristic value for player {player} is: {h_value}")
-#output:
-#Heuristic value for player X is: 2         
+
