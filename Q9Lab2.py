@@ -1,4 +1,5 @@
 # 9.	WAP to demonstrate the effect of temperature on the probability of choosing an inferior node by selecting an appropriate temperature schedule.
+from typing_extensions import Final
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -61,3 +62,8 @@ plt.xlabel('Temperature')
 plt.ylabel('Acceptance Probability')
 plt.xscale('log')
 plt.show()
+
+#output:
+# Initial Solution: [3.863132885673341, 2.179754963798235, -7.725057786477894, 3.76069251637122, 8.553711588235522]
+# Final Solution: [2.5062606767176634, -1.347640378437071, -9.71508967304682, 0.2867143504039038, 8.590269992631882]
+# Final Cost: 176.35538818963556
