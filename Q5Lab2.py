@@ -1,38 +1,38 @@
-def heuristic(board, player):
-    opponent = 'O' if player == 'X' else 'X'
-    
-    def count_open_lines(current_player, current_opponent):
-        count = 0
-        # Define all 8 possible winning lines
-        lines = []
-        # Rows
-        lines.extend([row for row in board])
-        # Columns
-        lines.extend([[board[j][i] for j in range(3)] for i in range(3)])
-        # Diagonals
-        lines.append([board[i][i] for i in range(3)])
-        lines.append([board[i][2 - i] for i in range(3)])
-        
-        # A line is open if the opponent has zero marks in it
-        for line in lines:
-            if all(cell != current_opponent for cell in line):
-                count += 1
-        return count
+# Q5.	WAP in Python to calculate the heuristic value of the states for Blocks World Problem as follows
 
-    # Calculate e(p) = Open(Player) - Open(Opponent)
-    open_p = count_open_lines(player, opponent)
-    open_opp = count_open_lines(opponent, player)
-    
-    return open_p - open_opp
+# Global heuristic: e(p) is calculated as
+# •	For each block that has the correct support structure, give +1 to every block in the support structure. 
+# •	For each block that has a wrong support structure: -1 to every block in the support structure
 
-# Example usage from your prompt
-board = [
-    ['X', 'O', 'X'],
-    [' ', 'X', ' '],
-    ['O', ' ', ' ']
-]
+def calculate_heuristic(current_state, goal_state):
+    """
+    Calculates the global heuristic e(p) for the Blocks World problem.
+    e(p) = (Sum of points for correct support) - (Sum of points for wrong support)
+    """
+    score = 0
+# i = current height/index (0 is the bottom/table)
+    # block = the name of the block (e.g., 'A')
+    for i, block in enumerate(current_state):
+        if i < len(goal_state) and current_state[:i+1] == goal_state[:i+1]:
 
-player = 'X'
-h_value = heuristic(board, player)
-print(f"Heuristic value for player {player} is: {h_value}")
+            score += (i + 1)
+        else:
+            score -= (i + 1)
 
+    return score   # ← MUST be inside the function
+
+
+# Test
+initial = ['A', 'D', 'C', 'B']
+goal = ['D', 'C', 'B', 'A']
+
+h_value = calculate_heuristic(initial, goal)
+print (f"Initial State: {initial}")
+print(f"Goal State:    {goal}")
+print("Heuristic Value:", h_value)
+
+
+#output:
+# Initial State: ['A', 'D', 'C', 'B']
+# Goal State:    ['D', 'C', 'B', 'A']
+#Heuristic Value: -10
