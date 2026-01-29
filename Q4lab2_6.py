@@ -11,29 +11,27 @@ class ManGoatLionCabbageProblem:
     def successor(self, state):
         successors = []
         man, goat, lion, cabbage = state
-        # Possible  
-        moves = [
-            ('man',),
-            ('man', 'goat'),
-            ('man', 'lion'),
-            ('man', 'cabbage')
-        ]
-        for move in moves:
-            new_state = list(state)
-            # Move the man
-            new_state[0] = 'R' if new_state[0] == 'L' else 'L'
-            # Move the other items if included in the move  
-            for item in move[1:]:
-                if item == 'goat':
-                    new_state[1] = 'R' if new_state[1] == 'L' else 'L'
-                elif item == 'lion':
-                    new_state[2] = 'R' if new_state[2] == 'L' else 'L'
-                elif item == 'cabbage':
-                    new_state[3] = 'R' if new_state[3] == 'L' else 'L'
-            new_state_tuple = tuple(new_state)
-            # Check for validity
-            if self.is_valid(new_state_tuple):
-                successors.append(new_state_tuple)
+
+        # 1. Man moves alone
+        new_man_pos = 'R' if man == 'L' else 'L'
+        alone_state = list(state)
+        alone_state[0] = new_man_pos
+        if self.is_valid(tuple(alone_state)):
+            successors.append(tuple(alone_state))
+
+        # 2. Man moves with one item
+        items = [('goat', 1), ('lion', 2), ('cabbage', 3)]
+        for item_name, idx in items:
+            # CRITICAL CHECK: Man must be on the same side as the item
+            if state[idx] == man:
+                new_state = list(state)
+                new_state[0] = new_man_pos   # Man moves
+                new_state[idx] = new_man_pos # Item moves with him
+                
+                new_state_tuple = tuple(new_state)
+                if self.is_valid(new_state_tuple):
+                    successors.append(new_state_tuple)
+
         return successors
     def is_valid(self, state):
         man, goat, lion, cabbage = state
@@ -80,10 +78,10 @@ if __name__ == "__main__":
     print(problem.generate_path(solution))
 # Output:
 # ('L', 'L', 'L', 'L')
-# ('R', 'L', 'L', 'L')
-# ('L', 'R', 'L', 'L')
 # ('R', 'R', 'L', 'L')
-# ('L', 'R', 'R', 'L')
+# ('L', 'R', 'L', 'L')
 # ('R', 'R', 'R', 'L')
-# ('L', 'R', 'R', 'R')
+# ('L', 'L', 'R', 'L')
+# ('R', 'L', 'R', 'R')
+# ('L', 'L', 'R', 'R')
 # ('R', 'R', 'R', 'R')
